@@ -39,13 +39,14 @@ when( --caminos con mas de 2 carriles estatales o federales ---
 else 3  
 end;
 
--- Topología red completa
+-- Topología RED_1
 alter table RED_1 add column source integer;
 alter table RED_1 add column target integer;
  
 select pgr_createTopology ('RED_1', 0.0001, 'geom', 'id');
+select pgr_analyzeGraph('RED_1', .0001,'geom', 'id','source','target')
 
----asgnacion de puntos al nodo más cercano de la red completa 
+---asgnacion de puntos al nodo más cercano de la RED_1 
 alter table PUNTOS add column nodo int;	
 update PUNTOS set nodo = foo.closest_node
 	from
