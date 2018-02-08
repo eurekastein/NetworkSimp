@@ -58,17 +58,16 @@ update PUNTOS set nodo = foo.closest_node
 where foo.PUNTO = PUNTOS.id
 
 --- simplificar la red
-create table RED_2 as 
-(
-select * from pgr_dijkstra('select id, source, target, costo as cost from red',
-	array(select nodo from PUNTOS),
-	array(select nodo from PUNTOS) 
-	directed:=false))
-
+create table red_2 as 
 select r.*, foo.edge
 from	 
-(select distinct edge from RED_2) as foo
-join red r 
+(select distinct edge 
+from 
+(select * from pgr_dijkstra('select id, source, target, costo as cost from red_carreteras_ferrocarril',
+	array(select nodo from nodos),
+	array(select nodo from nodos), 
+	directed:=false)) as i) as foo
+join red_carreteras_ferrocarril r 
 on r.id = foo.edge
 
 ---recalcula la topologia de la RED_2
