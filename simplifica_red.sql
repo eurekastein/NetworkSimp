@@ -108,10 +108,10 @@ alter table red_2 add column source int;
 alter table red_2 add column target int;
 select pgr_createTopology ('red_2', 0.0001, 'geom', 'id');
  
----Interseccion de caminos con ciudades
+---Interseccion de caminos con una ciudad cualquiera 
 select rp.id, rp.geom 
-from RED_2 as r2
-join (select * from POLIGONOS where id = '11') as p
+from red_2 as r2
+join (select * from ciudades where id = '11') as p
 on st_crosses (r2.geom, p.geom)
 
 ---- mejora el calculo del numero de segmentos que cruzan por un poligono de ciudad ---
