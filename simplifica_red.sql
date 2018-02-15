@@ -45,7 +45,7 @@ where c.id is null ) as pi
 alter table red add column length float;
 update red set length = st_length(geom)
 
---- Asigna costos o jerarquias 
+--- Asigna costos o jerarquias (PENDIENTE: usar estos pesos como multiplicador de la longitud) 
 Update red set --este qry es para red vial-- 
 costo = case 
 when(   --carreteras de cuota, con mas de 2 carriles estatales o federales ---      
